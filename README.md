@@ -1,4 +1,4 @@
-# Commercial Calculators MVP (Python)
+# Калькулятор потенциала роста продаж
 
 MVP project scaffold for commercial calculators to estimate sales driver payback:
 - Presence uplift
