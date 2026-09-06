@@ -1,102 +1,26 @@
 # Калькулятор потенциала роста продаж
 
-MVP project scaffold for commercial calculators to estimate sales driver payback:
-- Presence uplift
-- Promo ROI
-- Price impact (elasticity)
-- Unified scenario engine
+Streamlit-приложение для оценки, какой прирост продаж дают три рычага: представленность (presence uplift), промо (ROI) и цена (эластичность). Рычаги считаются по отдельности и собираются в один сценарий.
 
-## Stack
+Стек: Python 3.11, pandas, numpy, pydantic, streamlit, pytest.
 
-- Python 3.11
-- pandas
-- numpy
-- scikit-learn
-- pydantic
-- streamlit
-- pytest
+## Запуск
 
-## Project Structure
-
-```text
-.
-|-- app
-|   `-- streamlit_app.py
-|-- calculators
-|   |-- __init__.py
-|   |-- presence_calculator.py
-|   |-- price_impact_calculator.py
-|   |-- promo_roi_calculator.py
-|   `-- scenario_calculator.py
-|-- models
-|   |-- __init__.py
-|   |-- presence_model.py
-|   |-- price_model.py
-|   `-- promo_model.py
-|-- tests
-|   `-- test_calculators.py
-|-- config.py
-|-- requirements.txt
-`-- README.md
-```
-
-## Quick Start
-
-1. Create and activate virtual environment.
-2. Install dependencies.
-3. Run tests.
-4. Launch Streamlit app.
-
-```powershell
+```bash
 python -m venv .venv
-.venv\Scripts\Activate.ps1
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 pytest -q
 streamlit run app/streamlit_app.py
 ```
 
-## Publish to Git + Streamlit Community Cloud
+## Структура
 
-1. Initialize git repository and create first commit:
-
-```powershell
-git init
-git add .
-git commit -m "Initial commit: streamlit calculators app"
+```text
+app/streamlit_app.py     UI
+calculators/             расчёт presence / promo ROI / price / scenario
+models/                  Pydantic-схемы входов и выходов
+tests/                   регрессия калькуляторов
 ```
 
-2. Create an empty GitHub repository and link local project:
-
-```powershell
-git branch -M main
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin main
-```
-
-3. Deploy in Streamlit Community Cloud:
-- Open https://share.streamlit.io/
-- Connect your GitHub account
-- Select the repository/branch (`main`)
-- Set app file path to `app/streamlit_app.py`
-- Click **Deploy**
-
-After every new change:
-
-```powershell
-git add .
-git commit -m "Update app"
-git push
-```
-
-## Architecture Notes
-
-- `models/` contains typed input/output schemas (Pydantic) for validation and clear contracts.
-- `calculators/` contains pure business logic with small, testable functions.
-- `app/streamlit_app.py` is a thin UI layer that calls calculators and displays outputs.
-- `tests/` validates baseline calculator behavior for regression safety.
-
-This structure is intentionally lightweight, easy to extend with:
-- new driver models (e.g., shelf, availability),
-- data integration layer (SQL marts),
-- model training pipelines (scikit-learn),
-- scenario persistence and user management.
+`models/` задаёт контракт данных. `calculators/` — чистые функции без UI. `app/streamlit_app.py` только вызывает калькуляторы и показывает результат.
